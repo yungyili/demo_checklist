@@ -4,12 +4,24 @@
   "description": "A simple webapp to add checklist",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "yyli",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.3",
-    "mongoose": "^5.1.1"
+    "jsonwebtoken": "^8.2.1",
+    "jwt-simple": "^0.5.1",
+    "mongoose": "^5.1.1",
+    "morgan": "^1.9.0",
+    "nodemon": "^1.17.4",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.3"
   }
 }
