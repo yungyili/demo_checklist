@@ -9,13 +9,13 @@ const keys = require('./config/keys.js');
 app.use(bodyParser.json());
 app.use(auth.initialize());
 
-app.get('/', (req,res)=>{
+app.get('/api', (req,res)=>{
   res.send({
     status: 'Service is alive!'
   });
 });
 
-app.get("/user", auth.authenticate(), function(req, res) {
+app.get("/api/user", auth.authenticate(), function(req, res) {
     console.log("get /user:", req.user);
     var user = users.find(function(u) {
         return u.id === req.user.id;
@@ -24,8 +24,8 @@ app.get("/user", auth.authenticate(), function(req, res) {
     res.json(user);
 });
 
-app.post("/token", function(req, res) {
-    console.log("post /token: ", req.body);
+app.post("/api/login", function(req, res) {
+    console.log("post /login: ", req.body);
     if (req.body.email && req.body.password) {
         var email = req.body.email;
         var password = req.body.password;
