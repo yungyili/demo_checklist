@@ -19,17 +19,30 @@ class CheckListBoard extends Component {
     });
   }
 
-  renderCheckList(checklist){
+
+  renderCheckList(checklist){ //TODO: make pics different for every checklist
     return (
-      <div key={checklist.title}>
-        <h3>{checklist.title}</h3>
-        <div>{this.renderChecklistItems(checklist.items)}</div>
+      <div className="col s12 m4 l3" key={checklist.title}>
+        <div className="card">
+          <div className="card-image">
+            <img src="https://source.unsplash.com/random" />
+            <span className="card-title">{checklist.title}</span>
+            <a className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">add</i></a>
+          </div>
+          <div className="card-content">
+            <div>{this.renderChecklistItems(checklist.items)}</div>
+          </div>
+        </div>
       </div>
     );
   }
 
-  renderCheckLists(checklists){
-    return checklists.map(checklist => this.renderCheckList(checklist));
+  renderCheckLists(checklists) {
+    return (
+      <div className="row">
+        {checklists.map(checklist => this.renderCheckList(checklist))}
+      </div>
+    );
   }
 
   render () {
