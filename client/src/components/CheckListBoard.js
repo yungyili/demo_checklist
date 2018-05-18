@@ -11,8 +11,8 @@ class CheckListBoard extends Component {
   renderChecklistItems(items){
     return items.map(item=>{
       return (
-        <div key={item.content}>
-          <i className="material-icons">check</i>
+        <div key={item.content} style={{textOverflow:'ellipsis'}}>
+          <i className="material-icons">{item.checked? 'check':'crop_square'}</i>
           <span>{item.content}</span>
         </div>
       );
@@ -27,7 +27,7 @@ class CheckListBoard extends Component {
           <div className="card-image">
             <img src="https://source.unsplash.com/random" />
             <span className="card-title">{checklist.title}</span>
-            <a className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">add</i></a>
+            <a className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">edit</i></a>
           </div>
           <div className="card-content">
             <div>{this.renderChecklistItems(checklist.items)}</div>
