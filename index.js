@@ -2,9 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const auth = require('./services/passport')();
-const users = require('./models/users');
-const jwt = require("jwt-simple");
-const keys = require('./config/keys.js');
+
 
 app.use(bodyParser.json());
 app.use(auth.initialize());
@@ -15,38 +13,9 @@ app.get('/api', (req,res)=>{
   });
 });
 
-app.get("/api/user", auth.authenticate(), function(req, res) {
-    console.log("get /user:", req.user);
-    var user = users.find(function(u) {
-        return u.id === req.user.id;
-    });
+require('./routes/authRoutes')(app, auth);
+require('./routes/checklistRoutes')(app, auth);
 
-    res.json(user);
-});
-
-app.post("/api/login", function(req, res) {
-    console.log("post /login: ", req.body);
-    if (req.body.email && req.body.password) {
-        var email = req.body.email;
-        var password = req.body.password;
-        var user = users.find(function(u) {
-            return u.email === email && u.password === password;
-        });
-        if (user) {
-            var payload = {
-                id: user.id
-            };
-            var token = jwt.encode(payload, keys.jwtSecret);
-            res.json({
-                token: token
-            });
-        } else {
-            res.sendStatus(401);
-        }
-    } else {
-        res.sendStatus(401);
-    }
-});
 
 if (process.env.NODE_ENV == 'production') { //set by Heroku
   // 1. Express will serve up production assets

@@ -5,24 +5,19 @@ export const login = (loginInfo, history) =>
   async (dispatch) => {
     var token = null;
     var error = null;
-    const res = await axios.post('/api/login', loginInfo)
+    await axios.post('/api/login', loginInfo)
       .then((res)=>{
-        token = res.data;
+        token = res.data.token;
+        console.log('login: set jwtToken: ', token);
+        sessionStorage.setItem('jwtToken', token);
         history.push('/checklist-board');
-        return res;
       })
       .catch(e=>{
         console.log("login failed");
-        window.sessionStorage.user = {};
+        sessionStorage.removeItem('jwtToken');
         history.push('/');
         error = true;
       });
-
-      window.sessionStorage.user = {
-        email: loginInfo.email,
-        token: token,
-        error: error
-      };
 
       dispatch({
         type: LOGIN_OUT,
@@ -37,7 +32,7 @@ export const login = (loginInfo, history) =>
   export const logout = (history) =>
     async (dispatch) => {
       history.push('/');
-      window.sessionStorage.user = null;
+      sessionStorage.removeItem('jwtToken');
 
       dispatch({
         type: LOGIN_OUT,

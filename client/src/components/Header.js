@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import { withRouter } from 'react-router';
-import {login, logout} from '../actions';
+import {login, logout} from '../actions/authActions';
 
 class Header extends Component {
 

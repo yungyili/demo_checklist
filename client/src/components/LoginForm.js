@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {connect} from 'react-redux';
-import {login} from '../actions';
+import {login} from '../actions/authActions';
 import { withRouter } from 'react-router';
 const validEmailRe = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
