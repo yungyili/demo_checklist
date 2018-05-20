@@ -25,10 +25,7 @@ module.exports = (app, auth) => {
         '_id': req.params.id
       }).exec();
 
-      const ret = _.keyBy(checklist, '_id');
-      console.log("get /api/checklist, ret=", ret);
-
-      res.send(ret);
+      res.send(checklist[0]);
     });
 
   app.post("/api/checklist", auth.authenticate(), async (req, res) => {
@@ -47,7 +44,7 @@ module.exports = (app, auth) => {
       '_user': req.user.id
     }).save();
 
-    res.send(_.keyBy(checklist, '_id'));
+    res.send(checklist);
 
   });
 
