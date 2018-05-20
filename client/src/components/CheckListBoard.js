@@ -1,5 +1,7 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {fetchCheckLists} from '../actions/checklistActions';
 
 class CheckListBoard extends Component {
@@ -22,12 +24,17 @@ class CheckListBoard extends Component {
 
   renderCheckList(checklist){ //TODO: make pics different for every checklist
     return (
-      <div className="col s12 m4 l3" key={checklist.title}>
+      <div className="col s12 m4 l3" key={checklist.createDate}>
         <div className="card">
           <div className="card-image">
-            <img src="https://source.unsplash.com/random" />
+            <img src="https://source.unsplash.com/random" alt="random pics" />
             <span className="card-title">{checklist.title}</span>
-            <a className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">edit</i></a>
+            <Link
+              to={`/edit/${checklist._id}`}
+              className="btn-floating halfway-fab waves-effect waves-light red"
+            >
+              <i className="material-icons">edit</i>
+            </Link>
           </div>
           <div className="card-content">
             <div>{this.renderChecklistItems(checklist.items)}</div>
@@ -37,10 +44,20 @@ class CheckListBoard extends Component {
     );
   }
 
+
+
   renderCheckLists(checklists) {
+    var ret = [];
+    _.forOwn(
+      checklists, 
+      (checklist, _id) => {
+        ret.push(this.renderCheckList(checklist));
+      }
+    );
+
     return (
       <div className="row">
-        {checklists.map(checklist => this.renderCheckList(checklist))}
+        {ret}
       </div>
     );
   }
@@ -52,6 +69,13 @@ class CheckListBoard extends Component {
     return (
       <div>
         {this.renderCheckLists(this.props.checklists.content)}
+        <div>
+          <button
+            className="btn-floating btn-large waves-effect waves-light red right"
+          >
+            <i className="material-icons">add</i>
+          </button>
+        </div>
       </div>
     );
   };

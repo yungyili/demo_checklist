@@ -1,6 +1,7 @@
 module.exports = [
   {
-    _user: 1,
+    _id: 1,
+    _user: '5afe82b595c86cd8262263ca',
     title: 'My first checklist',
     items: [{
         checked: false,
@@ -15,7 +16,8 @@ module.exports = [
     ]
   },
   {
-    _user: 1,
+    _id: 2,
+    _user: '5afe82b595c86cd8262263ca',
     title: 'My second checklist',
     items: [{
         checked: false,
@@ -30,7 +32,8 @@ module.exports = [
     ]
   },
   {
-    _user: 1,
+    _id: 3,
+    _user: '5afe82b595c86cd8262263ca',
     title: 'My third checklist',
     items: [{
         checked: true,
@@ -45,7 +48,8 @@ module.exports = [
     ]
   },
   {
-    _user: 1,
+    _id: 4,
+    _user: '5afe82b595c86cd8262263ca',
     title: 'My forth checklist',
     items: [{
         checked: true,
@@ -61,7 +65,8 @@ module.exports = [
   }
   ,
   {
-    _user: 1,
+    _id: 5,
+    _user: '5afe82b595c86cd8262263ca',
     title: 'A lot more to do :D',
     items: [{
         checked: true,

@@ -1,6 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
 const app = express();
+require('./models/User');
+require('./models/CheckList');
+mongoose.connect(keys.mongoURI);
+
 const auth = require('./services/passport')();
 
 

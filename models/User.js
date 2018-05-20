@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const UserSchema = new Schema({
   email: String,
-  password: String
+  password: String,
+  activated: {type:Boolean, default:true}
 });
 
 mongoose.model('users', UserSchema);

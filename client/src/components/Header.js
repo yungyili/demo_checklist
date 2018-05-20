@@ -18,7 +18,6 @@ class Header extends Component {
 
   renderComponents(){
     const user = this.props.user;
-    console.log("Header: user:", user);
     if(user.token){
       return [
         (<li key={1}>{user.email}</li>),
