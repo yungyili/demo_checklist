@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router';
-import {submitChecklist, fetchCheckList} from '../actions/checklistActions';
+import {submitChecklist, fetchCheckList, deleteChecklist} from '../actions/checklistActions';
 import axios from 'axios';
 
 class EditForm extends Component {
@@ -87,6 +87,11 @@ class EditForm extends Component {
       this.setState(newState);
   }
 
+  deleteChecklist (index) {
+      this.props.deleteChecklist(this.state.checklist._id);
+      this.props.history.push('/checklist-board');
+  }
+
 
   renderItems(){
     return this.state.checklist.items.map((item, index, array)=>{
@@ -151,20 +156,30 @@ class EditForm extends Component {
             </button>
           </li>
         </ul>
+        <button
+          style={{margin:'10px'}}
+          onClick={(event)=>this.deleteChecklist(event)}
+          to="/"
+          className="btn green darken-3"
+        >
+          delete
+        </button>
         <Link
           to='/checklist-board'
           className="btn red darken-3"
-          style={{margin:'20px'}}
+          style={{margin:'10px'}}
         >
           cancel
         </Link>
         <button
+          style={{margin:'10px'}}
           onClick={this.onSave}
           type="button blue darken-1"
           className="btn "
         >
           save
         </button>
+
       </div>
     );
   }
@@ -179,6 +194,6 @@ function mapStateToProps(state){
   };
 }
 
-export default connect(mapStateToProps,{submitChecklist, fetchCheckList})(
+export default connect(mapStateToProps,{submitChecklist, fetchCheckList, deleteChecklist})(
     withRouter(EditForm)
   )

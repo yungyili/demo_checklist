@@ -61,4 +61,20 @@ module.exports = (app, auth) => {
     }
   });
 
+  app.delete("/api/checklist", auth.authenticate(), async (req, res) => {
+    console.log("delete /api/checklist:", req.user, req.body);
+
+    const {_id} = req.body;
+    if (!req.body._id){
+      res.sendStatus(401);
+      return;
+    }
+
+    console.log("delete /api/checklist: id: ", _id);
+    await CheckList.deleteOne({'_id': _id})
+      .exec()
+      .then( r => res.send({}))
+      .catch( e => res.sendStatus(500) );
+  });
+
 };

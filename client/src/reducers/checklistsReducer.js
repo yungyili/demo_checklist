@@ -1,5 +1,9 @@
 import _ from 'lodash';
-import {FETCH_CHECKLISTS, FETCH_CHECKLIST, SUBMIT_CHECKLIST} from '../actions/actionTypes';
+import {
+  FETCH_CHECKLISTS,
+  FETCH_CHECKLIST,
+  SUBMIT_CHECKLIST,
+  DELETE_CHECKLIST } from '../actions/actionTypes';
 
 
 export default function checklistsReducer(state={}, action) {
@@ -16,6 +20,15 @@ export default function checklistsReducer(state={}, action) {
       _.forOwn(action.payload.content, function(value, key) {
         newState[key] = value;
       });
+      return newState;
+    }
+  case DELETE_CHECKLIST:
+    if(action.payload.error || !action.payload.content){
+      return state;
+    } else {
+      var newState = {...state};
+      const id = action.payload.content;
+      delete newState[id];
       return newState;
     }
   default:
