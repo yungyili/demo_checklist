@@ -60,11 +60,13 @@ export const fetchCheckList = (id) =>
 
 export const submitChecklist = (checklist) =>
   async (dispatch) => {
+    console.log("submitChecklist: checklist=", checklist);
     const token = sessionStorage.getItem('jwtToken');
-    await axios
-      .post('/api/checklist', {
+    await axios({
+        method: 'post',
+        url: '/api/checklist',
         headers: { Authorization: `JWT ${token}` },
-        body: checklist
+        data: checklist
       })
       .then(res => {
         dispatch({
@@ -76,6 +78,7 @@ export const submitChecklist = (checklist) =>
         });
       })
       .catch(err => {
+        console.log("submitChecklist: failed: err=",err);
         dispatch({
           type: SUBMIT_CHECKLIST,
           payload: {

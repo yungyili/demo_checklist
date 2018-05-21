@@ -22,6 +22,12 @@ class EditForm extends Component {
     };
   }
 
+  onSave = (event) => {
+    this.props.submitChecklist(this.state.checklist);
+    this.props.history.push('/checklist-board');
+  }
+
+
   async componentDidMount(){
     console.log("EditForm: get checklist:", this.props.match.params.id);
     const token = sessionStorage.getItem('jwtToken');
@@ -92,11 +98,18 @@ class EditForm extends Component {
         </ul>
         <Link
           to='/checklist-board'
-          className="btn"
+          className="btn red darken-3"
           style={{margin:'20px'}}
         >
-          Back
+          cancel
         </Link>
+        <button
+          onClick={this.onSave}
+          type="button blue darken-1"
+          className="btn "
+        >
+          save
+        </button>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {FETCH_CHECKLISTS, FETCH_CHECKLIST} from '../actions/actionTypes';
+import {FETCH_CHECKLISTS, FETCH_CHECKLIST, SUBMIT_CHECKLIST} from '../actions/actionTypes';
 
 
 export default function checklistsReducer(state={}, action) {
@@ -7,6 +7,7 @@ export default function checklistsReducer(state={}, action) {
   switch(action.type){
   case FETCH_CHECKLISTS:
     return action.payload;
+  case SUBMIT_CHECKLIST:
   case FETCH_CHECKLIST:
     if (action.payload.error){
       return state;

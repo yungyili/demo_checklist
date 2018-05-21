@@ -35,17 +35,30 @@ module.exports = (app, auth) => {
       return;
     }
 
-    const {title, items} = req.body;
+    if(req.body._id) {
+      const {title, items, _id} = req.body;
+      console.log("post /api/checklist: update: ", title, items, _id);
+      const updateRes = await CheckList.updateOne(
+        {
+          '_id': _id
+        },{
+          $set:{title: title, items: items}
+        }).exec();
 
-    const checklist = await new CheckList({
-      'title': title,
-      'items': items,
-      'createDate': Date.now(),
-      '_user': req.user.id
-    }).save();
+      const checklist =  await CheckList.findOne({'_id': _id}).exec();
+      res.send(checklist);
+    }
+    else {
+      const {title, items} = req.body;
 
-    res.send(checklist);
-
+      const checklist = await new CheckList({
+        'title': title,
+        'items': items,
+        'createDate': Date.now(),
+        '_user': req.user.id
+      }).save();
+      res.send(checklist);
+    }
   });
 
 };
