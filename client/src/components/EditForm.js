@@ -27,7 +27,6 @@ class EditForm extends Component {
     this.props.history.push('/checklist-board');
   }
 
-
   async componentDidMount(){
     console.log("EditForm: get checklist:", this.props.match.params.id);
     const token = sessionStorage.getItem('jwtToken');
@@ -59,6 +58,18 @@ class EditForm extends Component {
       this.setState(newState);
   }
 
+  toggleCheckbox = (index, event) => {
+    const newState = {...this.state};
+    newState.checklist.items[index].checked = !this.state.checklist.items[index].checked;
+    this.setState(newState);
+  }
+
+  changeNewTitle (event) {
+      const newState = {...this.state};
+      newState.checklist.title = event.target.value;
+      this.setState(newState);
+  }
+
 
   renderItems(){
     return this.state.checklist.items.map((item, index, array)=>{
@@ -66,19 +77,20 @@ class EditForm extends Component {
       return (
         <li key={index} className="row">
           <div className="row">
-            <form className="col s12">
-              <div className="row">
-                <div className="input-field col s12">
-                  <i className="material-icons prefix">{item.checked? "done":"crop_square"}</i>
-                  <input
-                    type="text"
-                    placeholder='Description'
-                    value={this.state.checklist.items[index].content || ""}
-                    onChange={(event)=>this.changeNewContent(index, event)}
-                  />
-                </div>
-              </div>
-            </form>
+            <div className="input-field col s12">
+              <i
+                onClick={(event)=>this.toggleCheckbox(index, event)}
+                className="material-icons prefix"
+              >
+                {item.checked? "done":"crop_square"}
+              </i>
+              <input
+                type="text"
+                placeholder='Description'
+                value={this.state.checklist.items[index].content || ""}
+                onChange={(event)=>this.changeNewContent(index, event)}
+              />
+            </div>
           </div>
         </li>
       );
@@ -92,7 +104,17 @@ class EditForm extends Component {
 
     return (
       <div>
-        <h2>{this.state.checklist.title}</h2>
+        <div>
+          <div className="input-field col s6">
+            <input
+              type="text"
+              placeholder='Title'
+              value={this.state.checklist.title || ""}
+              onChange={(event)=>this.changeNewTitle(event)}
+            />
+          </div>
+        </div>
+
         <ul>
           {this.renderItems()}
         </ul>
