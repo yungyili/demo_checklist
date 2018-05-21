@@ -29,6 +29,12 @@ class EditForm extends Component {
 
   async componentDidMount(){
     console.log("EditForm: get checklist:", this.props.match.params.id);
+
+    if (this.props.match.params.id == "new") {
+      this.setState({initializing: false});
+      return;
+    }
+
     const token = sessionStorage.getItem('jwtToken');
     await axios
       .get(`/api/checklist/${this.props.match.params.id}`, {
@@ -70,6 +76,18 @@ class EditForm extends Component {
       this.setState(newState);
   }
 
+  addNewItem (event) {
+      const newState = {...this.state};
+      newState.checklist.items.push({checked: false, content: ''});
+      this.setState(newState);
+  }
+
+  deleteItem (index) {
+      const newState = {...this.state};
+      newState.checklist.items.splice(index, 1);
+      this.setState(newState);
+  }
+
 
   renderItems(){
     return this.state.checklist.items.map((item, index, array)=>{
@@ -90,6 +108,13 @@ class EditForm extends Component {
                 value={this.state.checklist.items[index].content || ""}
                 onChange={(event)=>this.changeNewContent(index, event)}
               />
+              <i
+                onClick={(event)=>this.deleteItem(index)}
+                className="material-icons prefix"
+              >
+                delete
+              </i>
+
             </div>
           </div>
         </li>
@@ -117,6 +142,15 @@ class EditForm extends Component {
 
         <ul>
           {this.renderItems()}
+          <li key="add-new-item">
+            <button
+              onClick={(event)=>this.addNewItem(event)}
+              to="/edit/new"
+              className="btn-floating btn-large waves-effect waves-light red right"
+            >
+              <i className="material-icons">add</i>
+            </button>
+          </li>
         </ul>
         <Link
           to='/checklist-board'

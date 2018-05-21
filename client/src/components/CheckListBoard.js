@@ -49,7 +49,7 @@ class CheckListBoard extends Component {
   renderCheckLists(checklists) {
     var ret = [];
     _.forOwn(
-      checklists, 
+      checklists,
       (checklist, _id) => {
         ret.push(this.renderCheckList(checklist));
       }
@@ -70,11 +70,12 @@ class CheckListBoard extends Component {
       <div>
         {this.renderCheckLists(this.props.checklists.content)}
         <div>
-          <button
+          <Link
+            to="/edit/new"
             className="btn-floating btn-large waves-effect waves-light red right"
           >
             <i className="material-icons">add</i>
-          </button>
+          </Link>
         </div>
       </div>
     );
