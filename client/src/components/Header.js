@@ -16,6 +16,12 @@ class Header extends Component {
     this.props.logout(this.props.history);
   }
 
+  componentDidMount(){
+    if(!this.props.user.token){
+      this.props.history.push('/');
+    }
+  }
+
   renderComponents(){
     const user = this.props.user;
     if(user.token){
