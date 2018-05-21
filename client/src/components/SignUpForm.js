@@ -2,21 +2,21 @@ import React, {Component} from 'react';
 import { Field, reduxForm } from 'redux-form';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {login} from '../actions/authActions';
+import {signup} from '../actions/authActions';
 import { withRouter } from 'react-router';
 const validEmailRe = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-class LoginForm extends Component {
+class SignUpForm extends Component {
 
   constructor(props){
     super(props);
 
-    this.onLoginClicked = this.onLoginClicked.bind(this);
+    this.onSignUpClicked = this.onSignUpClicked.bind(this);
   }
 
-  onLoginClicked(values) {
-    console.log("LoginForm: login: ", values);
-    this.props.login(values, this.props.history);
+  onSignUpClicked(values) {
+    console.log("SignUpForm: signup: ", values);
+    this.props.signup(values, this.props.history);
   }
 
   renderField = ({ input, label, type, meta: { touched, error } }) => (
@@ -24,6 +24,7 @@ class LoginForm extends Component {
       // the error message
       <div>
         <div>
+          <label>{label}</label>
           <input {...input} placeholder={label} type={type}/>
           <div className="red-text">
             {　touched && error &&　<span>{error}</span>}
@@ -32,12 +33,19 @@ class LoginForm extends Component {
       </div>
     );
 
-
-  render () {
+  render(){
     return (
       <div className="row">
-        <form onSubmit={this.props.handleSubmit(this.onLoginClicked)} className="col s6">
-          <div className="input-field col s6">
+        <form onSubmit={this.props.handleSubmit(this.onSignUpClicked)} className="col s6">
+          <div className="input-field col s12">
+              <Field
+                name="username"
+                component={this.renderField}
+                type="text"
+                label="user name"
+              />
+          </div>
+          <div className="input-field col s12">
               <Field
                 name="email"
                 component={this.renderField}
@@ -45,7 +53,7 @@ class LoginForm extends Component {
                 label="e-mail"
               />
           </div>
-          <div className="input-field col s6">
+          <div className="input-field col s12">
               <Field
                 name="password"
                 component={this.renderField}
@@ -53,28 +61,29 @@ class LoginForm extends Component {
                 label="password"
               />
           </div>
-          <div className="row">
-            <button className="btn col s12" type="submit">
-              Login
-            </button>
-            <div className="red-text">
-              {this.props.user.error && "Invalid username or password"}
-            </div>
-            <Link
-              className="right"
-              to="/signup"
-              style={{marginTop:'10px'}}
-            >
-              Sign Up
-            </Link>
+
+          <button className="btn col s12" type="submit">
+            Signup
+          </button>
+          <div className="red-text">
+            {this.props.user.error && "Failed to signup"}
           </div>
+
+          <Link
+            to="/"
+            className="btn col s12 red darken-3"
+            style={{marginTop:'15px'}}
+          >
+            cancel
+          </Link>
+
         </form>
       </div>
     );
-  };
+  }
 }
 
-function validate({email, password}){
+function validate({email, password, username}){
   const errors = {};
 
   if(!email){
@@ -87,6 +96,10 @@ function validate({email, password}){
     errors['password'] = 'Required field';
   }
 
+  if(!username){
+    errors['username'] = 'Required field';
+  }
+
   return errors;
 }
 
@@ -96,10 +109,10 @@ function mapStateToProps(state){
 }
 
 export default reduxForm({
-  form: 'loginForm', // a unique identifier for this form
+  form: 'signupForm', // a unique identifier for this form
   validate
 })(
-  connect(mapStateToProps,{login})(
-    withRouter(LoginForm)
+  connect(mapStateToProps,{signup})(
+    withRouter(SignUpForm)
   )
 )

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { withRouter } from 'react-router';
@@ -30,7 +29,7 @@ class EditForm extends Component {
   async componentDidMount(){
     console.log("EditForm: get checklist:", this.props.match.params.id);
 
-    if (this.props.match.params.id == "new") {
+    if (this.props.match.params.id === "new") {
       this.setState({initializing: false});
       return;
     }

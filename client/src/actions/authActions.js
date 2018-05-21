@@ -29,13 +29,40 @@ export const login = (loginInfo, history) =>
       });
   };
 
-  export const logout = (history) =>
-    async (dispatch) => {
-      history.push('/');
-      sessionStorage.removeItem('jwtToken');
+export const logout = (history) =>
+  async (dispatch) => {
+    history.push('/');
+    sessionStorage.removeItem('jwtToken');
+
+    dispatch({
+      type: LOGIN_OUT,
+      payload: {}
+    });
+  };
+
+export const signup = (user, history) =>
+  async (dispatch) => {
+    var token = null;
+    var error = null;
+    var newUser = null;
+
+    await axios.post('/api/user', user)
+      .then((res)=>{
+        newUser = res.data;
+        console.log('signup: succeed: ', newUser);
+        history.push('/');
+      })
+      .catch(e=>{
+        console.log('signup: failed: ', e); //TODO: pass error message to page
+        error = 'Failed to sign up';
+      });
 
       dispatch({
         type: LOGIN_OUT,
-        payload: {}
+        payload: {
+          email: newUser.email,
+          token: null,
+          error: error
+        }
       });
-    };
+  };
