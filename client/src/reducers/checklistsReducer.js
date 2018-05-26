@@ -8,6 +8,7 @@ import {
 
 export default function checklistsReducer(state={}, action) {
   console.log("userReducer: ", action);
+  var newState = undefined;
   switch(action.type){
   case FETCH_CHECKLISTS:
     return action.payload;
@@ -16,7 +17,7 @@ export default function checklistsReducer(state={}, action) {
     if (action.payload.error){
       return state;
     } else {
-      var newState = {...state};
+      newState = {...state};
       _.forOwn(action.payload.content, function(value, key) {
         newState[key] = value;
       });
@@ -26,7 +27,7 @@ export default function checklistsReducer(state={}, action) {
     if(action.payload.error || !action.payload.content){
       return state;
     } else {
-      var newState = {...state};
+      newState = {...state};
       const id = action.payload.content;
       delete newState[id];
       return newState;

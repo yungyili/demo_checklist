@@ -19,12 +19,12 @@ class LoginForm extends Component {
     this.props.login(values, this.props.history);
   }
 
-  renderField = ({ input, label, type, meta: { touched, error } }) => (
+  renderField = ({ id, input, label, type, meta: { touched, error } }) => (
       //TODO: submit button position will change due to showing of
       // the error message
       <div>
         <div>
-          <input {...input} placeholder={label} type={type}/>
+          <input {...input} placeholder={label} type={type} id={id}/>
           <div className="red-text">
             {　touched && error &&　<span>{error}</span>}
           </div>
@@ -39,6 +39,7 @@ class LoginForm extends Component {
         <form onSubmit={this.props.handleSubmit(this.onLoginClicked)} className="col s6">
           <div className="input-field col s6">
               <Field
+                id="landing-email"
                 name="email"
                 component={this.renderField}
                 type="text"

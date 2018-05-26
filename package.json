@@ -7,7 +7,8 @@
     "start": "node index.js",
     "dev": "concurrently \"npm run server\" \"npm run start --prefix client\" ",
     "server": "nodemon index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "mocha -R spec --timeout 10000"
   },
   "author": "yyli",
   "license": "ISC",
@@ -27,5 +28,10 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.2.0"
   }
 }

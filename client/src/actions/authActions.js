@@ -1,5 +1,11 @@
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import {LOGIN_OUT} from './actionTypes';
+const mock = new MockAdapter(axios);
+
+mock
+  .onPost('/api/login')
+  .reply(200,{token:'12345678'});
 
 export const login = (loginInfo, history) =>
   async (dispatch) => {

@@ -23,6 +23,8 @@ module.exports = (app, auth) => {
         password: password, //TODO: password should be encrypted
         name: name
       }).save();
+      //console.log("post /user: newUser=", newUser);
+
 
       res.json(newUser);
     });
